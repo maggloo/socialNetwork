@@ -1,0 +1,119 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 4fr 10fr;
+}
+
+.dialogItems {
+    padding: 10px;
+    background-color: #fdfdfe;
+}
+
+.dialog {
+    color: black;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+    border-bottom: solid lightgray 1px;
+}
+.dialogItem {
+    color: black;
+    text-decoration: none;
+}
+
+.profilePic {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 5px;
+}
+
+.dialog .active {
+    color: #8654f1;
+}
+
+.messages {
+    padding: 10px;
+    background-color: #fdfdfe;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 10px;
+}
+
+.messages img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message {
+    color: black;
+    min-width: 30px;
+}
+
+.rightImg {
+    flex-direction: row-reverse;
+}
+
+.leftPosition {
+    padding: 10px;
+    align-self: start;
+    background-color: #f5f7fb;
+    position: relative;
+    border-radius: 10px 10px 10px 0;
+}
+
+
+.rightPosition {
+    padding: 10px;
+    align-self: end;
+    background-color: #0066cc;
+    color: white;
+    position: relative;
+    border-radius: 10px 10px 0 10px;
+}
+
+.messageForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+}
+
+.messageForm textarea {
+    min-width: 60%;
+    max-width: 60%;
+    max-height: 40px;
+    min-height: 30px;
+    border-radius: 10px;
+    border: solid 1px #bfbfbf;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.messageForm textarea:focus {
+    outline: #231f21 1px solid;
+}
+
+.messageForm button {
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background-color: #4c484a;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.messageForm button:hover {
+    background-color: #231f21;
+    transition: background-color 0.2s;
+}
+
+
