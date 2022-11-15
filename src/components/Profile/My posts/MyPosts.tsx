@@ -3,9 +3,7 @@ import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import {
     MyPostsType,
-    ProfilePostsType,
 } from "../../../redux/store";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile_reducer";
 
 type MyPostsLocalType = {
     postsData: Array<MyPostsType>,

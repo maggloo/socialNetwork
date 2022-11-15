@@ -10,8 +10,8 @@ import {
 
 export type DialogsPropsType = {
     messages: MessagesPageType,
-    addMessageActionCreator: (text:string) => void,
-    addMessageHandler: () => void
+    updateMessageText: (text:string) => void,
+    addMessage: () => void
 }
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -35,12 +35,12 @@ const Dialogs = (props: DialogsPropsType) => {
     });
 
     const addMessageHandler = () => {
-        props.addMessageHandler();
+        props.addMessage();
     }
 
     let onPMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         if (e.currentTarget.value) {
-            props.addMessageActionCreator(e.currentTarget.value)
+            props.updateMessageText(e.currentTarget.value)
         }
     }
 

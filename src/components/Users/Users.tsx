@@ -1,30 +1,42 @@
-import React, {useEffect} from 'react';
-import s from './Users.module.css'
-import {UserPropsType} from "./UsersContainer";
-import axios from "axios";
-import userPhoto from '../../assets/imgs/default-pfp-19 (1).jpg'
+import React from 'react';
+import s from "./Users.module.css";
+import userPhoto from "../../assets/imgs/default-pfp-19 (1).jpg";
+import {initialStateUsersPageType} from "../../redux/users_reducer";
+import {NavLink} from "react-router-dom";
 
-/*
-const Users = (props: UserPropsType) => {
+type UsersType = initialStateUsersPageType & {
+    follow: (userID: number) => void,
+    unfollow: (userID: number) => void,
+    onPageChanged: (pageNumber: number) => void
+}
 
+const Users = (props: UsersType) => {
 
-    useEffect(() => {
-        if (props.usersPage.users.length === 0) {
-            axios
-                .get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(res => props.setUsers(res.data.items))
-        }
-    }, [])
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
+    let curP = props.currentPage;
+    let curPF = ((curP - 5) < 0) ? 0 : curP - 5;
+    let curPL = curP + 5;
+    let slicedPages = pages.slice(curPF, curPL);
 
     return (
         <div>
+            <div>
+                {slicedPages.map(el => <span key={el} onClick={(e) => props.onPageChanged(el)}
+                                             className={props.currentPage === el ? s.selectedPage : ''}> {el} </span>)}
+            </div>
             {
-                props.usersPage.users.map(u => <div key={u.id}>
+                props.users.map((u) => <div key={u.id}>
                     <span>
                         <div>
-                            <img src={u.photos.small ? u.photos.small : userPhoto} className={s.userPhoto}/>
-                        </div>
+                            <NavLink to={'/profile/' + u.id}>
+                                <img src={u.photos.small ? u.photos.small : userPhoto} className={s.userPhoto}/>
+                            </NavLink>
+                            </div>
                         <div>
                             {
                                 u.followed
@@ -50,4 +62,4 @@ const Users = (props: UserPropsType) => {
     );
 };
 
-export default Users;*/
+export default Users;

@@ -1,4 +1,4 @@
-import {actionsType, SideBarType} from "./store";
+import {SideBarType} from "./store";
 
 let initialState: SideBarType = {
     friends: [
@@ -8,7 +8,7 @@ let initialState: SideBarType = {
     ]
 }
 
-export const sideBarReducer = (state: SideBarType = initialState, action: actionsType) => {
+export const sideBarReducer = (state: SideBarType = initialState, action: any) => {
 
     return state;
 }

@@ -1,4 +1,4 @@
-import {actionsType, dispatchMessageType, MessagePropsType, MessagesPageType} from "./store";
+import {MessagePropsType, MessagesPageType} from "./store";
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
@@ -62,7 +62,11 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: a
     }
 }
 
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE} as const);
+type addMessageAT = ReturnType<typeof addMessage>;
+type updateNewMessageTextAT = ReturnType<typeof updateMessageText>;
 
-export const updateNewMessageTextActionCreator = (text: string) =>
+export type actionsType = addMessageAT | updateNewMessageTextAT
+
+export const addMessage = () => ({type: ADD_MESSAGE} as const);
+export const updateMessageText = (text: string) =>
     ({type: UPDATE_NEW_MESSAGE_TEXT, messageText: text} as const)
