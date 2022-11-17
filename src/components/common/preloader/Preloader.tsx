@@ -1,10 +1,9 @@
 import React from 'react';
-import preloader from "../../../assets/imgs/loader.svg";
+import style from './Preloader.module.css'
 
 const Preloader = () => {
     return (
-        <div style={{backgroundColor: 'white'}}>
-            <img src={preloader} />
+        <div className={style.preload}>
         </div>
     );
 };

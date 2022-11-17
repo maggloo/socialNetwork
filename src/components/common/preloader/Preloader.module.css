@@ -1,0 +1,6 @@
+.preload {
+    background: url("../../../assets/imgs/loader.svg");
+    background-size: contain;
+    height: 100px;
+    width: 100px;
+}
