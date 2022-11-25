@@ -3,6 +3,10 @@
     height: 100px;
 }
 
+.pages {
+    cursor: pointer;
+}
+
 .selectedPage {
     font-weight: bold;
 }

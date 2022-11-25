@@ -1,10 +1,23 @@
 import React from 'react';
 import s from "./Header.module.css";
+import {NavLink} from "react-router-dom";
 
-function Header(props: any) {
+
+type HeaderPropsType = {
+    isAuth: boolean,
+    login: string
+}
+
+function Header(props: HeaderPropsType) {
     return(
         <header className={s.header}>
             <img src={"https://www.logolynx.com/images/logolynx/b4/b49bdba462022ca2d43811d680617190.jpeg"}></img>
+            <div className={s.loginBlock}>
+                {props.isAuth
+                    ? <div>{props.login}</div>
+                    : <NavLink to={'/login'}>Login</NavLink>
+                }
+            </div>
         </header>
     )
 }
