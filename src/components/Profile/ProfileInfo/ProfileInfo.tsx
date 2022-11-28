@@ -2,10 +2,11 @@ import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {mapStateToPropsType} from "../ProfileContainer";
 import Preloader from "../../common/preloader/Preloader";
+import {ProfilePageType} from "../../../redux/profile_reducer";
 
 
 
-function ProfileInfo(props: mapStateToPropsType) {
+function ProfileInfo(props: {profileData: ProfilePageType | null}) {
 
     if (!props.profileData){
         return <Preloader />

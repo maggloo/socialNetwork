@@ -1,4 +1,6 @@
 import {MyPostsType} from "./store";
+import {Dispatch} from "redux";
+import {usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -95,3 +97,11 @@ export const updateNewPostText = (text: string) => (
     {type: UPDATE_NEW_POST_TEXT, postText: text} as const
     )
 export const setUserProfile = (profile: any) => ({type: SET_NEW_PROFILE, profile} as const);
+
+
+export const setUserAPIProfileTC = (userId: string) => (dispatch: Dispatch) => {
+    usersAPI.setUserProfile(userId)
+        .then(res => {
+            dispatch(setUserProfile(res));
+        })
+}

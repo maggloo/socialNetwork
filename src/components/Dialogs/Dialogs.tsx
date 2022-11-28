@@ -7,14 +7,11 @@ import {
     MessagePropsType,
     MessagesPageType
 } from "../../redux/store";
+import {ActionType} from "./DialogsContainer";
+import {Redirect} from "react-router-dom";
 
-export type DialogsPropsType = {
-    messages: MessagesPageType,
-    updateMessageText: (text:string) => void,
-    addMessage: () => void
-}
 
-const Dialogs = (props: DialogsPropsType) => {
+const Dialogs = (props: ActionType) => {
 
     const messagesElements = props.messages.messagesData.map((el: MessagePropsType) => {
         return <Message
@@ -44,6 +41,7 @@ const Dialogs = (props: DialogsPropsType) => {
         }
     }
 
+    if (!props.isAuth) return <Redirect to={'/login'} />;
 
     return (
         <div className={s.dialogs}>

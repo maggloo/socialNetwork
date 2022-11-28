@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import Profile from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
-import {ProfilePageType, ProfilePostsType, setUserProfile} from "../../redux/profile_reducer";
+import {ProfilePageType, setUserAPIProfileTC} from "../../redux/profile_reducer";
 import {AppStateType} from "../../redux/reduxStore";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 
 type PathParamsType = {
     userId: string
@@ -19,17 +18,16 @@ class ProfileContainer extends Component<CommonPropsType> {
         if (!userId) {
             userId = '2';
         }
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(res => {
-                this.props.setUserProfile(res.data);
-            })
+
+        this.props.setUserAPIProfileTC(userId)
     }
 
     render() {
+
+        if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <div>
-                <Profile {...this.props} profileData={this.props.profileData} />
+                <Profile profileData={this.props.profileData} />
             </div>
         );
     }
@@ -37,22 +35,24 @@ class ProfileContainer extends Component<CommonPropsType> {
 
 
 export type mapStateToPropsType = {
-    profileData: ProfilePageType | null
+    profileData: ProfilePageType | null,
+    isAuth: boolean
 }
 type mapDispatchToPropsType = {
-    setUserProfile: (profile: ProfilePostsType) => void
+    setUserAPIProfileTC: (userId: string) => void
 }
 
-type ProfilePropsType = mapDispatchToPropsType & mapStateToPropsType
+export type ProfilePropsType = mapDispatchToPropsType & mapStateToPropsType
 
 let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
-        profileData: state.profile.profile
+        profileData: state.profile.profile,
+        isAuth: state.auth.data.isAuth,
     }
 }
 
 let WithUrlData = withRouter(ProfileContainer);
 
 export default connect(mapStateToProps, {
-    setUserProfile
+    setUserAPIProfileTC
 }) (WithUrlData);

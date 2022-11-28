@@ -8,9 +8,22 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 
 
-let mapStateToProps = (state: AppStateType): {messages: MessagesPageType}  => {
+type MapStateToPropsType = {
+    messages: MessagesPageType,
+    isAuth: boolean
+}
+
+type MapDispatchToPropsType = {
+    addMessage: () => void,
+    updateMessageText: (text: string) => void
+}
+
+export type ActionType = MapStateToPropsType & MapDispatchToPropsType
+
+let mapStateToProps = (state: AppStateType): MapStateToPropsType  => {
     return {
-        messages: state.messages
+        messages: state.messages,
+        isAuth: state.auth.data.isAuth
     }
 }
 
