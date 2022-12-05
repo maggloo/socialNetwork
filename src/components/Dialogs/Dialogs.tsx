@@ -4,11 +4,9 @@ import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {
     DialogItemPropsType,
-    MessagePropsType,
-    MessagesPageType
+    MessagePropsType
 } from "../../redux/store";
 import {ActionType} from "./DialogsContainer";
-import {Redirect} from "react-router-dom";
 
 
 const Dialogs = (props: ActionType) => {
@@ -41,8 +39,6 @@ const Dialogs = (props: ActionType) => {
         }
     }
 
-    if (!props.isAuth) return <Redirect to={'/login'} />;
-
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItems}>
@@ -58,5 +54,6 @@ const Dialogs = (props: ActionType) => {
         </div>
     )
 }
+
 
 export default Dialogs;
