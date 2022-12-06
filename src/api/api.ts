@@ -22,13 +22,29 @@ export const usersAPI = {
         return instance
             .post(`follow/${userId}`).then(res => res.data)
     },
-    authMe() {
-        return  instance
-            .get(`auth/me`).then(res => res.data)
-    },
     setUserProfile(userId: string) {
-        return instance
-            .get(`profile/` + userId).then(res => res.data)
+        console.warn('Obsolete method. Please use profile API object.')
+        return profileAPI.setUserProfile(userId)
     }
 }
 
+export const profileAPI = {
+    setUserProfile(userId: string) {
+        return instance
+            .get(`profile/` + userId).then(res => res.data)
+    },
+    getStatus(userId: string) {
+        return instance
+            .get(`profile/status/` + userId).then(res => res.data)
+    },
+    updateStatus(status: string) {
+        return instance
+            .put(`profile/status`, {status})
+    }
+}
+
+export const authAPI = {
+    me(){
+        return instance.get(`auth/me`).then(res => res.data)
+    }
+}

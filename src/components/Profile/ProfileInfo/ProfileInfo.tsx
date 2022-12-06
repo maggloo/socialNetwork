@@ -1,23 +1,27 @@
 import React from 'react';
 import s from "./ProfileInfo.module.css";
 import Preloader from "../../common/preloader/Preloader";
-import {ProfilePageType} from "../../../redux/profile_reducer";
 import ProfileStatus from "./ProfileStatus";
+import {ProfilePropsType} from "../Profile";
 
 
 
-function ProfileInfo(props: {profileData: ProfilePageType | null}) {
+function ProfileInfo(props: ProfilePropsType) {
 
     if (!props.profileData){
         return <Preloader />
     }
+
 
     return (
         <div>
 
             <div className={s.descriptionBlock}>
                 <img src={props.profileData?.photos.large}/>
-                <ProfileStatus aboutMe={props.profileData.aboutMe}/>
+                <ProfileStatus
+                    status={props.status}
+                    updateStatus={props.updateStatus}
+                />
             </div>
         </div>
     )
