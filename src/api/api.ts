@@ -1,4 +1,5 @@
 import axios from "axios";
+import {LoginFormDataType} from "../components/Login/Login";
 
 
 const instance = axios.create({
@@ -46,5 +47,8 @@ export const profileAPI = {
 export const authAPI = {
     me(){
         return instance.get(`auth/me`).then(res => res.data)
+    },
+    login(userData: LoginFormDataType){
+        return instance.post(`auth/login`, userData).then(res => res.data)
     }
 }
