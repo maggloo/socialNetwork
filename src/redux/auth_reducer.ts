@@ -1,13 +1,14 @@
 import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 import {LoginFormDataType} from "../components/Login/Login";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const LOGIN_USER = 'LOGIN_USER';
 
 
 export type DataType = {
-    id: number,
+    id: string,
     login: string,
     email: string,
     isAuth: boolean,
@@ -22,7 +23,7 @@ export type AuthReducerType = {
 
 let initialState: AuthReducerType = {
     data: {
-        id: 0,
+        id: '',
         login: '',
         email: '',
         isAuth: false,
@@ -57,8 +58,8 @@ type loginMeAT = ReturnType<typeof loginMe>;
 
 type actionsType = SetUserDataAT | loginMeAT
 
-export const setAuthUserData = ({id, email, login}: DataType) => (
-    {type: SET_USER_DATA, userData: {id, email, login, isAuth: true}} as const
+export const setAuthUserData = ({id, email, login}: DataType, isAuth: boolean) => (
+    {type: SET_USER_DATA, userData: {id, email, login, isAuth}} as const
 )
 
 export const loginMe = () => (
@@ -70,7 +71,7 @@ export const authUserTC = () => {
         authAPI.me()
             .then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(setAuthUserData(data.data));
+                    dispatch(setAuthUserData(data.data, true));
                 }
             })
     }
@@ -81,7 +82,23 @@ export const loginUserTC = (userData: LoginFormDataType) => {
         authAPI.login(userData)
             .then(data => {
                 if (data.resultCode === 0) {
-                    dispatch(loginMe());
+                    // @ts-ignore
+                    dispatch(authUserTC());
+                } else {
+                    let message = data.messages.length > 0 ? data.messages[0] : 'Hmm.. Something is incorrect';
+                    dispatch(stopSubmit('login', {_error: message}))
+                }
+            })
+    }
+}
+
+export const logoutUserTC = () => {
+    return (dispatch: Dispatch) => {
+        authAPI.logout()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    // @ts-ignore
+                    dispatch(setAuthUserData(null, false));
                 }
             })
     }

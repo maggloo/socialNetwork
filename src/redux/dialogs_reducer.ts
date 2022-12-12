@@ -1,6 +1,22 @@
-import {MessagePropsType, MessagesPageType} from "./store";
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
+
+export type DialogItemPropsType = {
+    id: number,
+    name: string,
+    profilePic: string
+}
+
+export type MessagePropsType = {
+    id: number,
+    message: string,
+    profilePic: string
+}
+
+
+export type MessagesPageType = {
+    dialogsData: Array<DialogItemPropsType>
+    messagesData: Array<MessagePropsType>
+}
 
 let initialState: MessagesPageType = {
         dialogsData: [
@@ -41,7 +57,6 @@ let initialState: MessagesPageType = {
                 profilePic: 'https://assets.vogue.com/photos/5891b4feb482c0ea0e4da13b/master/pass/holding-rupaul-interview.jpg'
             },
         ],
-        newMessageText: ''
     }
 
 export const dialogsReducer = (state: MessagesPageType = initialState, action: actionsType): MessagesPageType  => {
@@ -50,23 +65,17 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: a
         case ADD_MESSAGE:
             let newMessage: MessagePropsType = {
                 id: 2,
-                message: state.newMessageText,
+                message: action.message,
                 profilePic: 'https://assets.vogue.com/photos/5891b4feb482c0ea0e4da13b/master/pass/holding-rupaul-interview.jpg'
             };
-            return {...state, newMessageText: '', messagesData: [...state.messagesData, newMessage]};
-        case UPDATE_NEW_MESSAGE_TEXT:
-
-            return {...state, newMessageText: action.messageText ? action.messageText : ''};
+            return {...state, messagesData: [...state.messagesData, newMessage]};
         default:
             return state;
     }
 }
 
 type addMessageAT = ReturnType<typeof addMessage>;
-type updateNewMessageTextAT = ReturnType<typeof updateMessageText>;
 
-export type actionsType = addMessageAT | updateNewMessageTextAT
+export type actionsType = addMessageAT
 
-export const addMessage = () => ({type: ADD_MESSAGE} as const);
-export const updateMessageText = (text: string) =>
-    ({type: UPDATE_NEW_MESSAGE_TEXT, messageText: text} as const)
+export const addMessage = (message: string) => ({type: ADD_MESSAGE, message} as const);

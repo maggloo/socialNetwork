@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {getStatusTC, ProfilePageType, setUserAPIProfileTC, updateStatusTC} from "../../redux/profile_reducer";
 import {AppStateType} from "../../redux/reduxStore";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 type PathParamsType = {
@@ -18,17 +17,16 @@ class ProfileContainer extends Component<CommonPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId;
         if (!userId) {
-            userId = '2';
+            console.log(this.props.authorizedUserId)
+            userId = this.props.authorizedUserId;
         }
         this.props.setUserAPIProfileTC(userId);
 
         this.props.getStatusTC(userId);
 
-
     }
 
     render() {
-
         return (
             <div>
                 <Profile
@@ -45,7 +43,8 @@ class ProfileContainer extends Component<CommonPropsType> {
 export type mapStateToPropsType = {
     profileData: ProfilePageType | null,
     status: string,
-    isAuth: boolean
+    isAuth: boolean,
+    authorizedUserId: string
 }
 type mapDispatchToPropsType = {
     setUserAPIProfileTC: (userId: string) => void,
@@ -55,10 +54,12 @@ type mapDispatchToPropsType = {
 
 export type ProfilePropsType = mapDispatchToPropsType & mapStateToPropsType;
 
-let mapStateToProps = (state: AppStateType): { profileData: ProfilePageType | null, status: string } => {
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         profileData: state.profile.profile,
-        status: state.profile.status
+        status: state.profile.status,
+        authorizedUserId: state.auth.data.id,
+        isAuth: state.auth.data.isAuth
     }
 }
 

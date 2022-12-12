@@ -32,23 +32,26 @@ export const usersAPI = {
 export const profileAPI = {
     setUserProfile(userId: string) {
         return instance
-            .get(`profile/` + userId).then(res => res.data)
+            .get(`profile/` + userId).then(res => res.data);
     },
     getStatus(userId: string) {
         return instance
-            .get(`profile/status/` + userId).then(res => res.data)
+            .get(`profile/status/` + userId).then(res => res.data);
     },
     updateStatus(status: string) {
         return instance
-            .put(`profile/status`, {status})
+            .put(`profile/status`, {status});
     }
 }
 
-export const authAPI = {
+export const  authAPI = {
     me(){
-        return instance.get(`auth/me`).then(res => res.data)
+        return instance.get(`auth/me`).then(res => res.data);
     },
     login(userData: LoginFormDataType){
-        return instance.post(`auth/login`, userData).then(res => res.data)
+        return instance.post(`auth/login`, userData).then(res => res.data);
+    },
+    logout() {
+        return instance.delete(`auth/login`).then(res => res.data);
     }
 }
