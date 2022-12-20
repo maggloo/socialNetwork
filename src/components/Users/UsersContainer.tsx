@@ -10,16 +10,24 @@ import Users from "./Users";
 import Preloader from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsers,
+    getUsers, getUsersSuper
+} from "../../redux/usersSelectors";
 
 class UsersContainer extends React.Component<UserPropsType> {
 
     componentDidMount() {
-        this.props.getUsers?.(this.props.currentPage, this.props.pageSize);
+        this.props.getUsersTC?.(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
 
-        this.props.getUsers?.(pageNumber, this.props.pageSize);
+        this.props.getUsersTC?.(pageNumber, this.props.pageSize);
     }
 
     render() {
@@ -44,7 +52,7 @@ class UsersContainer extends React.Component<UserPropsType> {
 
 type mapDispatchToPropsType = {
     setCurrentPage?: (page: number) => void,
-    getUsers?: (currentPage: number, pageSize: number) => void,
+    getUsersTC?: (currentPage: number, pageSize: number) => void,
     followUserTC: (userId: number) => void,
     unfollowUserTC: (userId: number) => void,
 }
@@ -60,6 +68,7 @@ export type MapStateToPropsType = {
 
 export type UserPropsType = mapDispatchToPropsType & MapStateToPropsType
 
+/*
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         users: state.usersPage.users,
@@ -70,13 +79,25 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
+*/
+
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+    return {
+        users: getUsersSuper(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsers(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
+    }
+}
 
 export default compose<ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
         setCurrentPage,
         toggleFollowingProgress,
-        getUsers: getUsersTC,
+        getUsersTC,
         followUserTC,
         unfollowUserTC
     })

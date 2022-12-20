@@ -2,6 +2,8 @@ import {Dispatch} from "redux";
 import {authAPI} from "../api/api";
 import {LoginFormDataType} from "../components/Login/Login";
 import {stopSubmit} from "redux-form";
+import {ThunkDispatch} from "redux-thunk";
+import {AppStateType} from "./reduxStore";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 const LOGIN_USER = 'LOGIN_USER';
@@ -68,7 +70,7 @@ export const loginMe = () => (
 
 export const authUserTC = () => {
     return (dispatch: Dispatch) => {
-        authAPI.me()
+        return authAPI.me()
             .then(data => {
                 if (data.resultCode === 0) {
                     dispatch(setAuthUserData(data.data, true));
@@ -78,14 +80,14 @@ export const authUserTC = () => {
 }
 
 export const loginUserTC = (userData: LoginFormDataType) => {
-    return (dispatch: Dispatch) => {
+    return (dispatch: ThunkDispatch<AppStateType, unknown, actionsType>) => {
         authAPI.login(userData)
             .then(data => {
                 if (data.resultCode === 0) {
-                    // @ts-ignore
                     dispatch(authUserTC());
                 } else {
                     let message = data.messages.length > 0 ? data.messages[0] : 'Hmm.. Something is incorrect';
+                    // @ts-ignore
                     dispatch(stopSubmit('login', {_error: message}))
                 }
             })

@@ -17,7 +17,6 @@ class ProfileContainer extends Component<CommonPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId;
         if (!userId) {
-            console.log(this.props.authorizedUserId)
             userId = this.props.authorizedUserId;
         }
         this.props.setUserAPIProfileTC(userId);
